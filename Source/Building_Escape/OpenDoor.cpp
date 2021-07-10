@@ -29,8 +29,15 @@ void UOpenDoor::BeginPlay()
 void UOpenDoor::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-	UE_LOG(LogTemp, Warning, TEXT("%s"), *GetOwner()->GetActorRotation().ToString());
-	UE_LOG(LogTemp, Warning, TEXT("Yaw is %f"), GetOwner()->GetActorRotation().Yaw);
+	
+	if(PressurePlate->IsOverlappingActor(ActorThatOpens))
+		OpenDoor(DeltaTime);
+}
+
+void UOpenDoor::OpenDoor(float DeltaTime)
+{
+	// UE_LOG(LogTemp, Warning, TEXT("%s"), *GetOwner()->GetActorRotation().ToString());
+	// UE_LOG(LogTemp, Warning, TEXT("Yaw is %f"), GetOwner()->GetActorRotation().Yaw);
 	
 	// Linear interpolation for door to open
 	CurrentYaw = FMath::Lerp(CurrentYaw, TargetYaw, 1.f * DeltaTime); // Door is now framerate independent

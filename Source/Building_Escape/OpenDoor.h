@@ -4,7 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
-#include "OpenDoor.generated.h"
+#include "Engine/TriggerVolume.h"
+#include "OpenDoor.generated.h" // This must be the last include
 
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -23,11 +24,18 @@ protected:
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+	
+	void OpenDoor(float DeltaTime);
 
 private:
 	float  InitalYaw, CurrentYaw;
 
 	UPROPERTY(EditAnywhere) // Variables under this are exposed to the editor
 	float TargetYaw = 90.f; 
-		
+
+	UPROPERTY(EditAnywhere) // Must set a new one for each variable we want exposed
+	ATriggerVolume* PressurePlate;
+
+	UPROPERTY(EditAnywhere)
+	AActor* ActorThatOpens;	
 };
