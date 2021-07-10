@@ -33,7 +33,7 @@ void UOpenDoor::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompon
 	UE_LOG(LogTemp, Warning, TEXT("Yaw is %f"), GetOwner()->GetActorRotation().Yaw);
 	
 	// Linear interpolation for door to open
-	CurrentYaw = FMath::Lerp(CurrentYaw, TargetYaw, 0.02);
+	CurrentYaw = FMath::Lerp(CurrentYaw, TargetYaw, 1.f * DeltaTime); // Door is now framerate independent
 	FRotator DoorRotation = GetOwner()->GetActorRotation();
 	DoorRotation.Yaw = CurrentYaw;
 	GetOwner()->SetActorRotation(DoorRotation);
