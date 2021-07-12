@@ -22,6 +22,10 @@ void UOpenDoor::BeginPlay()
 	InitalYaw = GetOwner()->GetActorRotation().Yaw;
 	CurrentYaw = InitalYaw;
 	TargetYaw += InitalYaw; 
+
+	if(!PressurePlate) // Lets us know that there is a null pointer
+		UE_LOG(LogTemp, Error, TEXT("%s has OpenDoor Component but no Pressure Plate set!!!"), *GetOwner()->GetName());
+
 }
 
 
@@ -30,7 +34,8 @@ void UOpenDoor::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompon
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 	
-	if(PressurePlate->IsOverlappingActor(ActorThatOpens))
+	// Check for null pointer
+	if(PressurePlate && PressurePlate->IsOverlappingActor(ActorThatOpens))
 		OpenDoor(DeltaTime);
 }
 
