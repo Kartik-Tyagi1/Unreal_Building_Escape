@@ -26,16 +26,29 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 	
 	void OpenDoor(float DeltaTime);
+	void CloseDoor(float DeltaTime);
 
 private:
-	float  InitalYaw, CurrentYaw;
+	float  InitialYaw, CurrentYaw;
+	float DoorLastOpened = 0.f;
 
+private:
 	UPROPERTY(EditAnywhere) // Variables under this are exposed to the editor
-	float TargetYaw = 90.f; 
+	float DoorOpenAngle = 90.f; 
+	
+	UPROPERTY(EditAnywhere)
+	float DoorCloseDelay = 0.5f; 
+
+	UPROPERTY(EditAnywhere)
+	float DoorOpenSpeed = 0.8f;
+	
+	UPROPERTY(EditAnywhere)
+	float DoorCloseSpeed = 2.f;
 
 	UPROPERTY(EditAnywhere) // Must set a new one for each variable we want exposed
 	ATriggerVolume* PressurePlate;
 
 	UPROPERTY(EditAnywhere)
 	AActor* ActorThatOpens;	
+
 };
