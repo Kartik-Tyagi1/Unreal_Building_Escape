@@ -49,7 +49,7 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 	FVector LineTraceDirection = PlayerViewPointRotation.Vector() * Reach;
 	FVector LineTraceEnd = PlayerViewPointLocation + LineTraceDirection;
 	
-	DrawDebugLine(
+	DrawDebugLine( // Draws a line between player and LineTraceEnd
 		GetWorld(),
 		PlayerViewPointLocation,
 		LineTraceEnd,
