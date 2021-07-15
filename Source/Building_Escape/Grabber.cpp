@@ -13,22 +13,27 @@ UGrabber::UGrabber()
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
-
-	// ...
 }
-
 
 // Called when the game starts
 void UGrabber::BeginPlay()
 {
 	Super::BeginPlay();
 
-	// Check for physics handle
+	FindPhysicsHandle();
+	SetupInputComponent();
+}
+
+void UGrabber::FindPhysicsHandle()
+{
 	PhysicsHandle = GetOwner()->FindComponentByClass<UPhysicsHandleComponent>();
 	if(PhysicsHandle){ /* PhysicsHandle is found */ }
 	else
 		UE_LOG(LogTemp, Error, TEXT("%s Does not have a PhysicsHandle Component"), *GetOwner()->GetName());
+}
 
+void UGrabber::SetupInputComponent()
+{
 	InputComponent = GetOwner()->FindComponentByClass<UInputComponent>();
 	if(InputComponent)
 	{
@@ -40,20 +45,31 @@ void UGrabber::BeginPlay()
 void UGrabber::Grab()
 {
 	UE_LOG(LogTemp, Warning, TEXT("Grabber Pressed"));
+	
+	GetFirstPhysicsBodyInReach();
+	// TODO: Attach Physics Handle
 }
 
 void UGrabber::Release()
 {
 	UE_LOG(LogTemp, Warning, TEXT("Grabber Released"));
+	// TODO: Release the physics handle
 }
-
 
 // Called every frame
 void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
+	// If physics handle is attached
+		// Move object we are holding
+
 	// Get player's viewpoint
+	
+}
+
+FHitResult UGrabber::GetFirstPhysicsBodyInReach() const
+{
 	FVector PlayerViewPointLocation;
 	FRotator PlayerViewPointRotation;
 	GetWorld()->GetFirstPlayerController()->GetPlayerViewPoint(
@@ -65,17 +81,6 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 	FVector LineTraceDirection = PlayerViewPointRotation.Vector() * Reach;
 	FVector LineTraceEnd = PlayerViewPointLocation + LineTraceDirection;
 	
-	DrawDebugLine( // Draws a line between player and LineTraceEnd
-		GetWorld(),
-		PlayerViewPointLocation,
-		LineTraceEnd,
-		FColor(0,255,0),
-		false,
-		0.f,
-		0,
-		5.f
-	);
-
 	FHitResult Hit;
 	FCollisionQueryParams TraceParams{
 		FName(TEXT("")),
@@ -97,5 +102,5 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 	if(ActorHit)
 		UE_LOG(LogTemp, Warning, TEXT("Line Trace Has Hit: %s"), *ActorHit->GetName());
 
+	return Hit;
 }
-
