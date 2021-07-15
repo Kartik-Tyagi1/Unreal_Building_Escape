@@ -22,13 +22,29 @@ UGrabber::UGrabber()
 void UGrabber::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
 	// Check for physics handle
 	PhysicsHandle = GetOwner()->FindComponentByClass<UPhysicsHandleComponent>();
-	
 	if(PhysicsHandle){ /* PhysicsHandle is found */ }
 	else
 		UE_LOG(LogTemp, Error, TEXT("%s Does not have a PhysicsHandle Component"), *GetOwner()->GetName());
+
+	InputComponent = GetOwner()->FindComponentByClass<UInputComponent>();
+	if(InputComponent)
+	{
+		InputComponent->BindAction("Grab", IE_Pressed, this, &UGrabber::Grab);
+		InputComponent->BindAction("Grab", IE_Released, this, &UGrabber::Release);
+	}
+}
+
+void UGrabber::Grab()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Grabber Pressed"));
+}
+
+void UGrabber::Release()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Grabber Released"));
 }
 
 

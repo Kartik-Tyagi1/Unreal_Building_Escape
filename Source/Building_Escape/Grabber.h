@@ -28,6 +28,10 @@ public:
 private:
 	float Reach = 100.f;
 	UPhysicsHandleComponent* PhysicsHandle = nullptr; // Protects aginst crashing due to loading times for componenets
+	UInputComponent* InputComponent = nullptr;
 
+private:
+	void Grab();
+	void Release();
 
 };
