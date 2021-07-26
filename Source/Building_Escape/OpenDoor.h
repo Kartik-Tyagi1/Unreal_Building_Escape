@@ -25,6 +25,7 @@ public:
 	
 	void OpenDoor(float DeltaTime);
 	void CloseDoor(float DeltaTime);
+	float TotalMassOfActors() const;
 
 private:
 	float  InitialYaw, CurrentYaw;
@@ -48,5 +49,8 @@ private:
 
 	UPROPERTY(EditAnywhere)
 	AActor* ActorThatOpens;	
+
+	UPROPERTY(EditAnywhere)
+	float MassToOpenDoor = 60.f;
 
 };
