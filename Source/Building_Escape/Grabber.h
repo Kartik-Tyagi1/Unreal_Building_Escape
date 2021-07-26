@@ -6,6 +6,12 @@
 #include "Grabber.generated.h"
 
 
+struct PositionAndReach
+{
+	FVector PlayerViewPointLocation;
+	FVector PlayerReach;
+};
+
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class BUILDING_ESCAPE_API UGrabber : public UActorComponent
 {
@@ -36,4 +42,7 @@ private:
 
 	// Returns first actor within reach with a physics body
 	FHitResult GetFirstPhysicsBodyInReach() const;
+
+	// Return player reach and postion in the world
+	PositionAndReach GetPlayerPositionAndReach() const;
 };
