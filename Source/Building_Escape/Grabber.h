@@ -31,7 +31,9 @@ protected:
 
 private:
 	float Reach = 100.f;
+	UPROPERTY()
 	UPhysicsHandleComponent* PhysicsHandle = nullptr; // Protects aginst crashing due to loading times for componenets
+	UPROPERTY()
 	UInputComponent* InputComponent = nullptr;
 
 private:
