@@ -45,10 +45,7 @@ private:
 	float DoorCloseSpeed = 2.f;
 
 	UPROPERTY(EditAnywhere) // Must set a new one for each variable we want exposed
-	ATriggerVolume* PressurePlate;
-
-	UPROPERTY(EditAnywhere)
-	AActor* ActorThatOpens;	
+	ATriggerVolume* PressurePlate = nullptr;
 
 	UPROPERTY(EditAnywhere)
 	float MassToOpenDoor = 60.f;

@@ -2,7 +2,7 @@
 #include "Engine/World.h"  // GetWorld() 
 #include "GameFramework/PlayerController.h" // PlayerController()
 #include "GameFramework/Actor.h"
-#include "Components/PrimitiveComponent.h"
+#include "Components/PrimitiveComponent.h" // GetMass()
 
 #define OUT
 
@@ -26,9 +26,6 @@ void UOpenDoor::BeginPlay()
 
 	if(!PressurePlate) // Lets us know that there is a null pointer
 		UE_LOG(LogTemp, Error, TEXT("%s has OpenDoor Component but no Pressure Plate set!!!"), *GetOwner()->GetName());
-
-	ActorThatOpens = GetWorld()->GetFirstPlayerController()->GetPawn(); // Returns default pawn 
-
 }
 
 
@@ -73,6 +70,13 @@ void UOpenDoor::CloseDoor(float DeltaTime)
 float UOpenDoor::TotalMassOfActors() const
 {
 	float TotalMass = 0.f;
+
+	if(!PressurePlate)
+	{ // Lets us know that there is a null pointer
+		UE_LOG(LogTemp, Error, TEXT("%s has OpenDoor Component but no Pressure Plate set!!!"), *GetOwner()->GetName());
+		return TotalMass;
+	}
+
 
 	// Find all overlapping actors
 	TArray<AActor*> OverlappingActors;
